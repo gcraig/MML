@@ -1,0 +1,41 @@
+import com.petebevin.markdown.MarkdownProcessor
+import org.xhtmlrenderer.pdf.ITextRenderer
+import org.ccil.cowan.tagsoup.Parser
+import org.apache.xalan.xsltc.trax.SAX2DOM
+import org.xml.sax.InputSource
+
+buildscript{
+  repositories {
+    mavenCentral()
+    mavenRepo urls: "http://scala-tools.org/repo-releases" 
+    mavenRepo urls: "http://download.java.net/maven/2/"
+  }
+
+  dependencies {
+    classpath "org.markdownj:markdownj:0.3.0-1.0.2b4"
+    classpath "org.ccil.cowan.tagsoup:tagsoup:1.2"
+    classpath "org.xhtmlrenderer:core-renderer:R8"
+  }
+}
+
+task build <<{
+  def source = "MML-Specification.md"
+  def target = "MML-Specification.pdf"
+
+  //Convert from markdown to html
+  def mp = new MarkdownProcessor()
+  def html = "<html><body>${mp.markdown((new File(source).text))}</body></html>"
+  
+  //Convert from html to w3c document
+  def parser = new Parser()
+  def sax2dom = new SAX2DOM()
+  parser.setContentHandler(sax2dom);
+  parser.setFeature(Parser.namespacesFeature, false);
+  parser.parse(new InputSource(new ByteArrayInputStream(html.getBytes())));
+  
+  //Use Document to create pdf
+  ITextRenderer renderer = new ITextRenderer();
+  renderer.setDocument(sax2dom.getDOM(), null);
+  renderer.layout();
+  renderer.createPDF((new File(target).newOutputStream()))
+}
