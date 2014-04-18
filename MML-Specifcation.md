@@ -144,3 +144,7 @@ Provide syntax highlighting, for MML files, for editors:
 - EditPlus
 - Sublime
 
+
+## License
+
+MIT: Please see LICENSE file
