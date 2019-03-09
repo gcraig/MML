@@ -1,6 +1,6 @@
 # MML
 
-Minimal Modeling Language is what Markdown is plain text is to PDF output generation - a loose anaology, but apt. With plain text written in MML, a developer can specify and *generate* source code output in multiple frameworks and platforms. The initial release is geared towards OOP standard tooling, but there is no reason functional programming and other paradignms cannot be incorporated. 
+Minimal Modeling Language is what Markdown is to plain text PDF generation. With plain text written in MML, a developer can specify and *generate* source code output in multiple frameworks and platforms. The initial release is geared towards OOP standard tooling, but there is no reason functional programming and other paradignms cannot be incorporated. 
 
 ## Contributing
 
